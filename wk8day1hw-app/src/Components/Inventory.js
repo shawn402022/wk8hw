@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-
+import Car from './Car'
 export default function Inventory() {
     const [inventory, setInventory] = useState({})
     
@@ -19,10 +19,9 @@ export default function Inventory() {
     return(
         <div className = 'Inventory'>
             <h2>{inventory.owner}</h2>
-            <p>Car :{inventory.name}</p>
-            <p>Year :{inventory.year}</p>
-
 
         </div>
     )
 }
+
+
