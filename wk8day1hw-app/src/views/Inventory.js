@@ -1,5 +1,8 @@
 import { useEffect, useState } from 'react'
-import Car from './Car'
+import Car from '../Components/Car'
+
+
+
 export default function Inventory() {
     const [inventory, setInventory] = useState({})
     
@@ -17,10 +20,13 @@ export default function Inventory() {
     }, [])
 
     return(
-        <div className = 'Inventory'>
-            <h2>{inventory.owner}</h2>
-
+        <div className = 'inventory'>
+            <h2>Inventory</h2>
+            
+            { inventory.map(car => <Car key={car.id} car={car} /> ) }
+            
         </div>
+        
     )
 }
 

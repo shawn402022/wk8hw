@@ -1,6 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
-import Inventory from './Components/Inventory';
+import Inventory from './views/Inventory';
+
 import Profile from './Components/Profile';
 import Home from './Components/Home';
 import {BrowserRouter, Routes, Route, Link } from 'react-router-dom';
