@@ -4,7 +4,7 @@ import Car from '../Components/Car'
 
 
 export default function Inventory() {
-    const [inventory, setInventory] = useState({})
+    const [inventory, setInventory] = useState([ ])
     
     useEffect(()=> {
         async function fetchCar() {
@@ -18,12 +18,19 @@ export default function Inventory() {
         fetchCar()
 
     }, [])
+    function showInventory() {
+              return inventory.map(car => <Car key={car.id} car={car} /> ) 
 
+    }
     return(
         <div className = 'inventory'>
             <h2>Inventory</h2>
-            
-            { inventory.map(car => <Car key={car.id} car={car} /> ) }
+            {
+               inventory.length === 0 ? 
+               <p> Loading ...</p>  :
+               showInventory()
+            }
+
             
         </div>
         
