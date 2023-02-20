@@ -1,6 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import Inventory from './views/Inventory';
+import InventorySingle from './views/InventorySingle';
 
 import Profile from './Components/Profile';
 import Home from './Components/Home';
@@ -18,6 +19,7 @@ export default function App() {
         <Routes>
           <Route path="/" element = {<Home/>} />
           <Route path="/inventory" element = {<Inventory/>} />
+          <Route path="/inventory/:id" element = {<InventorySingle/>} />
           <Route path="/profile" element = {<Profile/>} />
         </Routes>
       </BrowserRouter>

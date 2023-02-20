@@ -4,9 +4,11 @@ import Car from "../Components/Car"
 
 
 export default function InventorySingle() {
-    const[post, setPost] = useState({})
+    const[car, setCar] = useState({})
     const{ id } =  useParams()
-
+    /*useparams gives a object of the key of the name of your parameter.   
+    you get a object of an object with akey of id and a value of whats actually in the route
+    
 
     /*
     Take the id from use Params.
@@ -18,20 +20,23 @@ export default function InventorySingle() {
     */
 
     useEffect(() => {
-        async function loadPost() {
+        async function loadCar() {
             const response = await fetch(`https://my-json-server.typicode.com/Llang8/cars-api/cars/${id}`)
             const data = await response.json()
-            setPost(data)
+           
+            setCar(data)
+            
         }
 
-        loadPost()
+        loadCar()
 
     }, [id])
 
     return (
         <div className="post">
-            Post Single: {id}
-            <Car car={post}/>
+            Single Car: {id}
+            { car.name }
+            <Car car={car}/>
         </div>
     )
 }

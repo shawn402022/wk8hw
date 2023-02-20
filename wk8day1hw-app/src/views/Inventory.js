@@ -19,7 +19,7 @@ export default function Inventory() {
 
     }, [])
     function showInventory() {
-              return inventory.map(car => <Car key={car.id} car={car} /> ) 
+              return inventory.map(car => <Car key={car.id} car={car} showLink={true} /> ) 
 
     }
     return(
