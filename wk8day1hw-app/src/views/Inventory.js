@@ -1,23 +1,12 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useContext } from 'react'
+import { DataContext } from '../contexts/DataProvider'
 import Car from '../Components/Car'
 
 
 
 export default function Inventory() {
-    const [inventory, setInventory] = useState([ ])
-    
-    useEffect(()=> {
-        async function fetchCar() {
-            const response = await fetch('https://my-json-server.typicode.com/Llang8/cars-api/cars/')
-            const data = await response.json()
-            setInventory(data)
-            console.log(data)
-
-        }
-
-        fetchCar()
-
-    }, [])
+    const {inventory} = useContext(DataContext)
+  
     function showInventory() {
               return inventory.map(car => <Car key={car.id} car={car} showLink={true} /> ) 
 

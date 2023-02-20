@@ -1,11 +1,13 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useContext } from "react"
 import { useParams } from "react-router-dom"
 import Car from "../Components/Car"
+import { DataContext } from "../contexts/DataProvider"
 
 
 export default function InventorySingle() {
     const[car, setCar] = useState({})
     const{ id } =  useParams()
+    const{ loadCar} = useContext(DataContext)
     /*useparams gives a object of the key of the name of your parameter.   
     you get a object of an object with akey of id and a value of whats actually in the route
     
@@ -20,15 +22,13 @@ export default function InventorySingle() {
     */
 
     useEffect(() => {
-        async function loadCar() {
-            const response = await fetch(`https://my-json-server.typicode.com/Llang8/cars-api/cars/${id}`)
-            const data = await response.json()
-           
+        async function handleCar() {
+            const data = await loadCar(id)
             setCar(data)
             
         }
 
-        loadCar()
+        handleCar()
 
     }, [id])
 
