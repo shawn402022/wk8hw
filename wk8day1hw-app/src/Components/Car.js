@@ -20,7 +20,7 @@ export default function Car(props) {
         <div className="clist">
             {buildTitle() }
             
-            <p>{props.car.id}</p>
+            
             <p>{props.car.year}</p>
             <p>{props.car.transmissiom}</p>
             <p>{props.car.selling_price}</p>
