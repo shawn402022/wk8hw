@@ -1,5 +1,6 @@
 import { useState, useEffect, createContext, useContext } from "react";
-import {getFirestore, getDocs, collection, doc, getDoc, Timestamp, addDoc } from '@firebase/firestore'
+import {getFirestore, getDocs, collection, collectionGroup, doc, getDoc, Timestamp, addDoc, query, limit, setDoc } from '@firebase/firestore'
+import { AuthContext } from "./AuthProvider";
 
 
 export const DataContext = createContext()
@@ -7,6 +8,8 @@ export const DataContext = createContext()
 export const DataProvider = function (props) {
     const db = getFirestore()
     const [inventory, setInventory] = useState([ ])
+    const { user } = useContext(AuthContext)
+
 
     useEffect(()=> {
         async function fetchCar() {
@@ -14,12 +17,20 @@ export const DataProvider = function (props) {
             // const data = await response.json()
             // setInventory(data)
             // console.log(data)
-            const querySnapshot = await getDocs(collection(db, "Inventory"))
+            // const q = query(collectionGroup(db,'posts'), orderBy('date_created', 'desc'))
+            const q = query(collectionGroup(db,'posts')) 
+
+            const querySnapshot = await getDocs(q)
             const postDocs = []
 
-            querySnapshot.forEach((doc) => {
+            querySnapshot.forEach(async(doc) => {
+
+                const userData = await getDoc(doc.ref.parent.parent)
+                // const username = username = userData.data().userame
+
                 postDocs.push({
                     id:doc.id,
+                    // username: username,
                     ...doc.data()
 
                 })
@@ -50,25 +61,37 @@ export const DataProvider = function (props) {
         }      
     }
 
-    async function addVehicle(name, owner, sellingPrice, year) {
+    async function addVehicle(name, year, owner) {
         const newVehicle = {
             name: name,
+            year: year,
             owner: owner,
-            sellingPrice: sellingPrice,
-            year, year
-            // username: 'ctemple'
-            // date_created: Timestamp.now()
+            date_created: Timestamp.now()
         }
 
-        const doc = await addDoc(collection(db, 'Inventory'), newVehicle )
+        const userDoc = await setDoc(doc(db, 'users', user.userid), {
+            username: user.username
+        })
+
+        const postDoc = await addDoc(collection(db,'users', user.userid, 'Inventory'), newVehicle )
+
+        newVehicle.id = postDoc.id
+
+        setInventory ([ newVehicle, ...inventory])
     }
 
+    async function fetchCar(parameter) {
+        const response = await fetch(`https://my-json-server.typicode.com/Llang8/cars-api/cars/${parameter}`)
+        const data = await response.json()
+        return data
+
+    }
 
 
 
     const value ={
         inventory,
-        // fetchCar,
+        fetchCar,
         loadCar,
         addVehicle
 

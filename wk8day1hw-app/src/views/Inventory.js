@@ -5,10 +5,14 @@ import Car from '../Components/Car'
 
 
 export default function Inventory() {
-    const {inventory} = useContext(DataContext)
+    const {inventory, addVehicle} = useContext(DataContext)
 
     function handleSubmit(event) {
         event.preventDefault()
+
+        const formData = new FormData(event.target)
+
+        addVehicle(formData.get('name'), formData.get('year'), formData.get('owner'))
         
     }
   
