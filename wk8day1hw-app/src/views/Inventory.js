@@ -6,6 +6,11 @@ import Car from '../Components/Car'
 
 export default function Inventory() {
     const {inventory} = useContext(DataContext)
+
+    function handleSubmit(event) {
+        event.preventDefault()
+        
+    }
   
     function showInventory() {
               return inventory.map(car => <Car key={car.id} car={car} showLink={true} /> ) 
@@ -14,6 +19,12 @@ export default function Inventory() {
     return(
         <div className = 'inventory'>
             <h2>Inventory</h2>
+            <form onSubmit={handleSubmit}>
+                <input type='text' name="name" placeholder="name" />
+                <input type='text' name="year" placeholder="year" />
+                <input type='text' name="owner" placeholder="owner" />
+                <button>Add Car</button>
+            </form>
             {
                inventory.length === 0 ? 
                <p> Loading ...</p>  :

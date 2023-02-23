@@ -1,5 +1,5 @@
 import { useState, useEffect, createContext, useContext } from "react";
-import {getFirestore, getDocs, collection, doc, getDoc, Timestamp } from '@firebase/firestore'
+import {getFirestore, getDocs, collection, doc, getDoc, Timestamp, addDoc } from '@firebase/firestore'
 
 
 export const DataContext = createContext()
@@ -50,23 +50,28 @@ export const DataProvider = function (props) {
         }      
     }
 
-    // async function addVehicle(name, owner, sellingPrice, year) {
-    //     const newVehicle = {
-    //         name: name,
-    //         owner: owner,
-    //         sellingPrice: sellingPrice,
-    //         year, year
-    //         username: 'ctemple'
-    //         date_created: Timestamp.now()
-    //     }
+    async function addVehicle(name, owner, sellingPrice, year) {
+        const newVehicle = {
+            name: name,
+            owner: owner,
+            sellingPrice: sellingPrice,
+            year, year
+            // username: 'ctemple'
+            // date_created: Timestamp.now()
+        }
+
+        const doc = await addDoc(collection(db, 'Inventory'), newVehicle )
+    }
 
 
-    // }
 
 
     const value ={
         inventory,
-        loadCar
+        // fetchCar,
+        loadCar,
+        addVehicle
+
     }
 
     return(
